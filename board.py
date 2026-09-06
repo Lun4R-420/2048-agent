@@ -1,9 +1,5 @@
 import random
 
-def new_board():
-    board = [[0] * 4 for _ in range(4)]
-    return board
-
 def spawn_tile(board):
     empty_tiles = []
     for row in range(4):
@@ -18,6 +14,12 @@ def spawn_tile(board):
 
     value = random.choices([2, 4], weights=(90, 10), k=1)
     board[row][col] = value[0]
+
+def new_board():
+    board = [[0] * 4 for _ in range(4)]
+    for _ in range(2):
+        spawn_tile(board)
+    return board
 
 def process_row_left(row):
     compressed = [value for value in row if value != 0]
