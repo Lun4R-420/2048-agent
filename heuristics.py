@@ -1,6 +1,8 @@
 from board import transpose
 import math
 
+WEIGHTS = [1, 1, -1, 1]
+
 def count_empty(board) -> int:
     count = 0
     for row in range(4):
@@ -57,5 +59,4 @@ def corner_weight(board):
 
 def evaluate(board):
     heuristics = [count_empty(board), monotonicity(board), smoothness(board), corner_weight(board)]
-    weights = [1, 1, -1, 1]
-    return sum([weights[i] * heuristics[i] for i in range(4)])
+    return sum([WEIGHTS[i] * heuristics[i] for i in range(4)])
