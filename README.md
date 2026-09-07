@@ -18,9 +18,17 @@ Expectimax bot that plays 2048, with a Gemini agent stepping in at milestone til
 
 ## Benchmark
 
-38% win rate, ~1332 average max tile over 25 games at depth 3.
+~40% win rate, ~1332 average max tile over 25 games at depth 3.
 
 I tried tuning the heuristic weights with hill climbing (`tune.py`), twice, at two different sample sizes. Both runs found weights that scored better on their own small sample, but both performed worse than the original weights once validated on a bigger benchmark. Kept the original weights.
+
+## Why depth 3, not deeper
+
+Expectimax gets expensive fast with depth, every extra ply multiplies the search by legal moves times empty cells times 2 spawns. I tried depth 4 anyway, ran it twice at 25 games to make sure it wasn't just noise. Turns out it's actually worse, about 24% win rate vs 40% for depth 3. This is a real thing in game search called search pathology, a heuristic built around one depth doesn't just work at another, and looking further ahead can make the bot more confident in a wrong read instead of a better one. I kept depth 3 since that's what the weights were actually built around.
+
+## Why the win rate isn't crazy high
+
+Win rate comes down to how far the bot can see and how good the heuristic actually is. Depth 3 with pretty simple heuristics and hand picked weights, 40% is a fair number for that, not some hard limit on the game. Bots that search deeper with better heuristics get 90%+ in real benchmarks. The gap here is just how much time and scope I put into this project, not a wall in the approach.
 
 ## Running it locally
 
